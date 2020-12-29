@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Program documents
+sl/
+
+# IDEA
+.idea
