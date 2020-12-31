@@ -10,7 +10,7 @@ from typing import Optional
 from datetime import datetime
 import string
 import random
-from inspect import getsourcefile
+from sltools import setup
 
 
 # GENERAL SETUP
@@ -34,11 +34,11 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return RedirectResponse(config.get("SERVER", "redirect"))
 
 
 @app.get("/404")
-def read_root():
+def read_notfound():
     html_content = """
         <html>
             <head>
@@ -57,61 +57,41 @@ def read_root():
 def read_item(slashtag: str):
     try:
         link = Query()
-        #result = db.search(link.slashtag == slashtag)
         result = db.get(link.slashtag == slashtag)
         return RedirectResponse(result["link"])
     except:
         return RedirectResponse("/404")
 
 
-@app.post("/add")
+@app.get("/api/all")
+def read_all():
+    if config.get("SERVER", "visibility") == "public":
+        return iter(db)
+    else:
+        return {"msg": "No permission"}
+
+
+@app.post("/api/add")
 def add_item(linkitem: Link):
-    config.read("sl/config.ini")
     if config.get("SERVER", "key") == linkitem.key:
-        slashtagLength = 7
+        slashtagLength = int(config.get("SERVER", "length"))
         if linkitem.slashtag is None:
             slashtag = "".join(random.choices(string.ascii_lowercase + string.digits, k=slashtagLength))
         else:
             slashtag = linkitem.slashtag
         db.insert({"slashtag": slashtag, "link": linkitem.link})
-        url = config.get("SERVER", "domain")
+        url = config.get("SERVER", "host")
         return {"msg": "200 - link added", "link": url+"/"+slashtag}
     else:
         return {"msg": "Authentication failed!"}
 
 
-# SETUP SCRIPT
+# START SCRIPT
 
-def start():
-    print(custom_fig.renderText("shortlink"))
-    print("Version: 1.0.0 \nLicense: MIT \nAuthor: berrysauce\n")
-    try:
-        with open("sl/config.ini", "r") as f:
-            f.read()
-    except IOError:
-        print("[...]   Starting setup - no config found")
-        os.mkdir("sl")
-        print(50 * "-")
-        print("Welcome to shortlink! Please follow this setup\n before you continue using shortlink.")
-        domain = input("\n What's your domain name? Type skip to use localhost. >>> ")
-        if domain == "skip":
-            domain = "127.0.0.1"
-        key = input("\n Please enter your Password for accessing the API. Keep this secret! >>> ")
-
-        print("[...]   Creating config")
-        config["SERVER"] = {"domain": domain,
-                            "key": key}
-        with open("sl/config.ini", "w") as configfile:
-            config.write(configfile)
-        print("[...]   Created config")
-
-        print("[...]   Creating database")
-        with open("sl/db.json", "w") as database:
-            database.write("")
-        print("[...]   Created database")
-    finally:
-        print("[...]   Starting your server")
-
-start()
+setup.start()
 db = TinyDB("sl/db.json")
-uvicorn.run(app)
+config.read("sl/config.ini")
+host = config.get("SERVER", "host")
+port = int(config.get("SERVER", "port"))
+logging = config.get("SERVER", "logging")
+uvicorn.run(app, host=host, port=port, log_level=logging)
