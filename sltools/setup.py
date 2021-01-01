@@ -1,14 +1,21 @@
 import configparser
 import os
 from pyfiglet import Figlet
+from sltools import hashing
 
+'''
+shortlink
+sltools/setup.py
+'''
+
+version = "1.0.0"
 custom_fig = Figlet(font="slant")
 config = configparser.ConfigParser()
 
 
 def start():
     print(custom_fig.renderText("shortlink"))
-    print("Version: 1.0.0 \nLicense: MIT \nAuthor: berrysauce\n")
+    print("Version: {0} \nLicense: MIT \nAuthor: berrysauce\n".format(version))
     try:
         with open("sl/config.ini", "r") as f:
             f.read()
@@ -28,7 +35,8 @@ def start():
         if not port:
             port = "8000"
 
-        print(" \n[3/7] Where should we redirect users when they visit the root? You can use your homepage domain here. Press enter to use the default (/404).")
+        print(
+            " \n[3/7] Where should we redirect users when they visit the root? You can use your homepage domain here. Press enter to use the default (/404).")
         redirect = input("(domain) >>> ")
         if not redirect:
             redirect = "/404"
@@ -57,13 +65,15 @@ def start():
         print("[...]   Creating config")
         os.mkdir("sl")
 
+        hashedkey = hashing.hashpw(key)
+
         config["SERVER"] = {"host": domain,
                             "port": port,
                             "redirect": redirect,
                             "length": length,
                             "logging": logging,
                             "visibility": visibility,
-                            "key": key}
+                            "key": hashedkey}
         with open("sl/config.ini", "w") as configfile:
             config.write(configfile)
         print("[...]   Created config")

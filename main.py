@@ -1,27 +1,38 @@
 from pyfiglet import Figlet
 import configparser
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 from tinydb import TinyDB, Query
-import os
 from fastapi.responses import RedirectResponse, HTMLResponse
 import uvicorn
 from pydantic import BaseModel
 from typing import Optional
-from datetime import datetime
 import string
 import random
-from sltools import setup
+from sltools import setup, hashing
 
+'''
+        shortlink
+-----------------------------
+Self-hosted, easy to use link
+shortener made in Python 3.7.
+
+License: MIT
+Author: berrysauce
+'''
 
 # GENERAL SETUP
 
 custom_fig = Figlet(font="slant")
 config = configparser.ConfigParser()
 
+
 class Link(BaseModel):
     slashtag: Optional[str] = None
     link: str
     key: str
+
+class All(BaseModel):
+    key: Optional[str] = None
 
 app = FastAPI()
 
@@ -32,12 +43,12 @@ app = FastAPI()
 
 # API
 
-@app.get("/")
+@app.get("/", status_code=301)
 def read_root():
     return RedirectResponse(config.get("SERVER", "redirect"))
 
 
-@app.get("/404")
+@app.get("/404", status_code=404)
 def read_notfound():
     html_content = """
         <html>
@@ -50,39 +61,55 @@ def read_notfound():
             </body>
         </html>
         """
-    return HTMLResponse(content=html_content, status_code=404)
+    return HTMLResponse(content=html_content)
 
 
-@app.get("/{slashtag}")
-def read_item(slashtag: str):
+@app.get("/{slashtag}", status_code=301)
+def read_item(slashtag: str, response: Response):
     try:
         link = Query()
         result = db.get(link.slashtag == slashtag)
         return RedirectResponse(result["link"])
     except:
+        response.status_code = status.HTTP_404_NOT_FOUND
         return RedirectResponse("/404")
 
 
-@app.get("/api/all")
-def read_all():
+@app.get("/api/all", status_code=200)
+def read_all(response: Response, key: Optional[str] = None):
     if config.get("SERVER", "visibility") == "public":
         return iter(db)
     else:
-        return {"msg": "No permission"}
+        if hashing.verifypw(key) is True:
+            return iter(db)
+        else:
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return {"msg": "No permission"}
 
 
-@app.post("/api/add")
-def add_item(linkitem: Link):
-    if config.get("SERVER", "key") == linkitem.key:
+@app.post("/api/add", status_code=201)
+def add_item(linkitem: Link, response: Response):
+    if hashing.verifypw(linkitem.key) is True:
         slashtagLength = int(config.get("SERVER", "length"))
         if linkitem.slashtag is None:
             slashtag = "".join(random.choices(string.ascii_lowercase + string.digits, k=slashtagLength))
+            db.insert({"slashtag": slashtag, "link": linkitem.link})
+            url = config.get("SERVER", "host")
+            return {"msg": "Link added", "link": url + "/" + slashtag}
         else:
-            slashtag = linkitem.slashtag
-        db.insert({"slashtag": slashtag, "link": linkitem.link})
-        url = config.get("SERVER", "host")
-        return {"msg": "200 - link added", "link": url+"/"+slashtag}
+            link = Query()
+            result = db.get(link.slashtag == linkitem.slashtag)
+            if result == None:
+                slashtag = linkitem.slashtag
+            else:
+                response.status_code = status.HTTP_409_CONFLICT
+                return {"msg": "Already exists!"}
+
+            db.insert({"slashtag": slashtag, "link": linkitem.link})
+            url = config.get("SERVER", "host")
+            return {"msg": "Link added", "link": url+"/"+slashtag}
     else:
+        response.status_code = status.HTTP_401_UNAUTHORIZED
         return {"msg": "Authentication failed!"}
 
 
