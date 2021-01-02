@@ -18,10 +18,12 @@ Shortlink is easy to install and host on any Python 3.7 and pip capable device.
 - a computer
 
 ## Installation
-First of all, clone the GitHub repository with (if don't have git installed, install it like [this](https://www.git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+First of all, clone the GitHub repository with
 ```
 git clone https://github.com/berrysauce/shortlink.git
 ```
+*(if don't have git installed, install it like [this](https://www.git-scm.com/book/en/v2/Getting-Started-Installing-Git))*
+
 Then, navigate to the repository folder with 
 ```
 cd shortlink
