@@ -12,10 +12,10 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/berrysauce/shortlink)
 ![Python version](https://img.shields.io/badge/python-3.7-blue)
 
+---
+
 # shortlink
 Self-hostable link shortening API made with Python
-
----
 
 Ever wanted to have your own link shortener for free? With shortlink you can turn long links like `myexampledomain.com/this-is-an-example-post` to `example.co/324nk1`. This has multiple advantages: you can write down and share the links much easier, they look prettier, and you can fit the links character-limited fields (e.g. Tweet).
 
