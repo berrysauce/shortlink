@@ -1,10 +1,19 @@
-# shortlink
-Self-hostable link shortening API made with Python
+```
+                                             __               __  ___       __  
+                                       _____/ /_  ____  _____/ /_/ (_)___  / /__
+                                      / ___/ __ \/ __ \/ ___/ __/ / / __ \/ //_/
+                                     (__  ) / / / /_/ / /  / /_/ / / / / / ,<   
+                                    /____/_/ /_/\____/_/   \__/_/_/_/ /_/_/|_|  
+                                            
+```
 
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/berrysauce/shortlink)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/berrysauce/shortlink)
 ![GitHub repo size](https://img.shields.io/github/repo-size/berrysauce/shortlink)
 ![Python version](https://img.shields.io/badge/python-3.7-blue)
+
+# shortlink
+Self-hostable link shortening API made with Python
 
 ---
 
