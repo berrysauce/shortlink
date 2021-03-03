@@ -19,7 +19,7 @@ Self-hostable link shortening API made with Python
 
 Ever wanted to have your own link shortener for free? With shortlink you can turn long links like `myexampledomain.com/this-is-an-example-post` to `example.co/324nk1`. This has multiple advantages: you can write down and share the links much easier, they look prettier, and you can fit the links character-limited fields (e.g. Tweet).
 
-Shortlink is easy to install and host on any Python 3.7 and pip capable device.
+Shortlink is easy to install and host on any Python 3.7 and pip capable device. Also, shortlink is efficient even on old or slow systems and is made of relatively simple code.
 
 ## Requirements
 - Python 3 and pip
