@@ -62,3 +62,11 @@ Set the host to your domain (without http(s)://) and your port to `80`. Make sur
 
 ## Security
 If you find any vulnerabilities, please send me an Email: support@[removeifhuman]berrysauce.me.
+
+## Credits
+Thanks to:
+- [https://www.vitoshacademy.com/hashing-passwords-in-python/](Vitosh Academy) (sltools/hashing.py - Slightly modified)
+- [https://fastapi.tiangolo.com/](FastAPI) (pip Package)
+- [https://www.uvicorn.org/](Uvicorn) (pip Package)
+- [https://tinydb.readthedocs.io/en/latest/index.html](TinyDB) (pip Package)
+
