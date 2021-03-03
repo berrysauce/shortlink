@@ -58,7 +58,7 @@ If you need to change something in your config, edit it with `nano sl/config.ini
 I'd recommend you to access the /docs page. There you can try out the API and see how to use it in your code. This page is public, that's why you need the password for certain things like creating a link and viewing all links (if you configured it that way).
 
 ## Using shortlink with a custom domain
-Set the host to your domain (without http(s)://) and your port to `80`. Make sure your domain points to your server IP.
+Set the host to your domain (without http(s)://) and your port to `80`. Make sure your domain points to your server IP. If you're using Cloudflare to manage your DNS, please disable the orange cloud symbol (so traffic won't go through the Cloudflare network) since Shortlink doesn't currently support SSL.
 
 ## Security
 If you find any vulnerabilities, please send me an Email: support@[removeifhuman]berrysauce.me.
