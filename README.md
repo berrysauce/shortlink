@@ -65,8 +65,8 @@ If you find any vulnerabilities, please send me an Email: support@[removeifhuman
 
 ## Credits
 Thanks to:
-- [https://www.vitoshacademy.com/hashing-passwords-in-python/](Vitosh Academy) (sltools/hashing.py - Slightly modified)
-- [https://fastapi.tiangolo.com/](FastAPI) (pip Package)
-- [https://www.uvicorn.org/](Uvicorn) (pip Package)
-- [https://tinydb.readthedocs.io/en/latest/index.html](TinyDB) (pip Package)
+- [Vitosh Academy](https://www.vitoshacademy.com/hashing-passwords-in-python/) (sltools/hashing.py - Slightly modified)
+- [FastAPI](https://fastapi.tiangolo.com/) (pip Package)
+- [Uvicorn](https://www.uvicorn.org/) (pip Package)
+- [TinyDB](https://tinydb.readthedocs.io/en/latest/index.html) (pip Package)
 
