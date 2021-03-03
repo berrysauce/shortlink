@@ -55,7 +55,7 @@ If the server got started, you're done! Shortlink is now running. You can stop i
 If you need to change something in your config, edit it with `nano sl/config.ini`. **Please do NOT change the key value since this will lock you out of your API!** If you need to change your password, backup the `db.json` file, re-install shortlink and put it back in the `sl` folder.
 
 ## Using the API
-I'd recommend you to access the /docs page. There you can try out the API and see how to use it in your code. This page is public, that's why you need the password for certain things like creating a link and viewing all (if you configured it that way).
+I'd recommend you to access the /docs page. There you can try out the API and see how to use it in your code. This page is public, that's why you need the password for certain things like creating a link and viewing all links (if you configured it that way).
 
 ## Using shortlink with a custom domain
 Set the host to your domain (without http(s)://) and your port to `80`. Make sure your domain points to your server IP.
