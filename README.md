@@ -23,7 +23,7 @@ Shortlink is easy to install and host on any Python 3.7 and pip capable device. 
 
 ## Requirements
 - Python 3 and pip
-- a domain
+- a domain (optional, otherwise use your IP)
 - a computer
 
 ## Installation
