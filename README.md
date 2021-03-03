@@ -56,3 +56,6 @@ If you need to change something in your config, edit it with `nano sl/config.ini
 
 ## Using shortlink with a custom domain
 Set the host to your domain (without http(s)://) and your port to `80`. Make sure your domain points to your server IP.
+
+## Security
+If you find any vulnerabilities, please send me a message: support@[removeifhuman]berrysauce.me.
