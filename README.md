@@ -51,7 +51,7 @@ python3 main.py
 
 The program should prompt you with a few questions. Please read through them carefully!
 
-If the server got started, you're done! Shortlink is now running. You can stop it with `Ctrl + C`.
+If the server got started, you're done! Shortlink is now running. You can stop it with <kbd>Ctrl</kbd>+<kbd>C</kbd>.
 If you need to change something in your config, edit it with `nano sl/config.ini`. **Please do NOT change the key value since this will lock you out of your API!** If you need to change your password, backup the `db.json` file, re-install shortlink and put it back in the `sl` folder.
 
 ## Using the API
